@@ -24,7 +24,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Extract version from tag
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          if [[ "$TAG" == *-* ]]; then
+            echo "VERSION=${TAG#*-}" >> $GITHUB_ENV
+          else
+            echo "VERSION=$TAG" >> $GITHUB_ENV
+          fi
 
       - name: Build release JAR
         run: ./gradlew clean test build -Pmod_version=$VERSION --no-configuration-cache

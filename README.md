@@ -1,5 +1,7 @@
 # Translator / 翻译器
 
+[English](README.md) | [简体中文](README_zh-CN.md)
+
 [![Modrinth](https://img.shields.io/modrinth/dt/translator-neoforge?logo=modrinth&label=Modrinth&style=flat-square&color=00af5c)](https://modrinth.com/mod/translator-neoforge)
 [![Game versions](https://img.shields.io/modrinth/game-versions/translator-neoforge?logo=modrinth&style=flat-square)](https://modrinth.com/mod/translator-neoforge/versions)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](LICENSE)
@@ -56,6 +58,10 @@ Press **U** and enable **Auto translate chat** / **Auto translate entity names**
 ```
 
 See [docs/DEV.md](docs/DEV.md).
+
+## AI-assisted development
+
+For **Cursor, DeepSeek V4 Pro**, or other AI tools, use the self-contained kit in **[ai-handoff/](ai-handoff/README.md)** (prompts, project overview, scripts).
 
 ## Publish to Modrinth
 

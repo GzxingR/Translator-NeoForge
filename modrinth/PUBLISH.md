@@ -2,6 +2,8 @@
 
 本项目使用 [Minotaur](https://github.com/modrinth/minotaur)，发布到 **[Translator (NeoForge)](https://modrinth.com/mod/translator-neoforge)**（slug: `translator-neoforge`）。
 
+Modrinth 长描述默认同步 **`modrinth/body_zh-CN.md`**（简体中文）；英文见 `modrinth/body_en.md`。
+
 ## 一、发布前检查
 
 - [ ] `./gradlew test build` 通过

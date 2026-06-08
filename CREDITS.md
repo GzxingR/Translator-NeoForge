@@ -1,11 +1,13 @@
-# Credits / 致谢
+# Credits
+
+**English** | [中文 Chinese](CREDITS_zh.md)
 
 ## Project
 
 - **Author & maintainer:** [Gstar](https://github.com/GzxingR)
 - **Development:** Independent NeoForge 1.21.1 rebuild with **AI assistance** (Cursor Agent)
 
-## Design references / 设计参考
+## Design references
 
 This mod implements in-game translation features similar in spirit to the open-source **Translator** ecosystem. The NeoForge codebase was restructured independently; the following projects informed design and architecture:
 

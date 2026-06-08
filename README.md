@@ -1,6 +1,6 @@
 # Translator
 
-**English** | [中文 Chinese](README_zh-CN.md)
+**English** | [中文 Chinese](README_zh.md)
 
 [![Modrinth](https://img.shields.io/modrinth/dt/translator-neoforge?logo=modrinth&label=Modrinth&style=flat-square&color=00af5c)](https://modrinth.com/mod/translator-neoforge)
 [![Game versions](https://img.shields.io/modrinth/game-versions/translator-neoforge?logo=modrinth&style=flat-square)](https://modrinth.com/mod/translator-neoforge/versions)
@@ -72,10 +72,10 @@ Details: [modrinth/PUBLISH.md](modrinth/PUBLISH.md)
 
 - **Modrinth:** https://modrinth.com/mod/translator-neoforge
 - **Source:** https://github.com/GzxingR/Translator-NeoForge
-- **中文 Chinese:** [README_zh-CN.md](README_zh-CN.md)
+- **中文 Chinese:** [README_zh.md](README_zh.md) · [docs/INSTALL_zh.md](docs/INSTALL_zh.md)
 - **Issues:** https://github.com/GzxingR/Translator-NeoForge/issues
-- **Changelog:** [CHANGELOG.md](CHANGELOG.md)
-- **Credits:** [CREDITS.md](CREDITS.md)
+- **Changelog:** [CHANGELOG.md](CHANGELOG.md) · [CHANGELOG_zh.md](CHANGELOG_zh.md)
+- **Credits:** [CREDITS.md](CREDITS.md) · [CREDITS_zh.md](CREDITS_zh.md)
 
 ## License
 

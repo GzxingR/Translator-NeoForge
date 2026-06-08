@@ -51,5 +51,7 @@ Full command reference: [docs/INSTALL.md](https://github.com/GzxingR/Translator-
 
 Simplified Chinese guides are on **GitHub** (this Modrinth page is English-only):
 
-- [README — 中文简介](https://github.com/GzxingR/Translator-NeoForge/blob/main/README_zh-CN.md)
-- [Installation & commands — 安装与全部指令（中文）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL.md)
+- [README — 中文简介](https://github.com/GzxingR/Translator-NeoForge/blob/main/README_zh.md)
+- [Installation & commands — 安装与全部指令（中文）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL_zh.md)
+- [Development — 开发指南（中文）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/DEV_zh.md)
+- [Changelog — 更新日志（中文）](https://github.com/GzxingR/Translator-NeoForge/blob/main/CHANGELOG_zh.md)

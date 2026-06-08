@@ -1,50 +1,57 @@
-# 维护指南
+# Maintenance Guide
 
-## 与 Fabric 版同步 common 层
+**English** | [中文 Chinese](MAINTAIN_zh.md)
 
-Fabric 参照仓库：`Translator-1.21.3`（同级目录）。
+## Syncing common layer with Fabric
 
-建议流程：
+Fabric reference repo: `Translator-1.21.3` (sibling directory).
 
-1. 在 Fabric 仓库修改 `src/main/common/kgg/translator/` 后，对 NeoForge 项目执行 diff：
+Suggested workflow:
+
+1. After changing `src/main/common/kgg/translator/` in Fabric, diff against NeoForge:
    ```bash
    diff -ru ../Translator-1.21.3/src/main/common ../Translator-1.21.1-neoforge/src/main/common
    ```
-2. 仅合并平台无关改动；事件/配置抽象保持使用 `OptionStorage`、`PlatformHooks`、纯 Java 事件。
-3. 平台相关代码留在各自 `src/main/java/`。
+2. Merge only platform-agnostic changes; keep `OptionStorage`, `PlatformHooks`, and plain Java events.
+3. Platform-specific code stays in each project's `src/main/java/`.
 
-## 依赖升级检查点
+## Dependency upgrade checklist
 
-| 组件 | 文件 | 说明 |
-|------|------|------|
-| NeoForge | `gradle.properties` → `neo_version` | [NeoForged 版本页](https://projects.neoforged.net/neoforged/neoforge) |
-| Parchment | `parchment_mappings_version` | 与 MC 版本匹配 |
-| Cloth Config | `cloth_config_version` | CurseForge/Modrinth NeoForge 构建 |
-| ModMenu NeoForge | 运行时 mod | 非编译依赖 |
+| Component | File | Notes |
+|-----------|------|-------|
+| NeoForge | `gradle.properties` → `neo_version` | [NeoForged versions](https://projects.neoforged.net/neoforged/neoforge) |
+| Parchment | `parchment_mappings_version` | Match MC version |
+| Cloth Config | `cloth_config_version` | CurseForge/Modrinth NeoForge build |
+| ModMenu NeoForge | Runtime mod | Not a compile dependency |
 
-## Mixin 与版本差异
+## Mixins & version differences
 
-1.21.1 与 1.21.3 方法签名可能不同。升级 MC 时：
+1.21.1 vs 1.21.3 method signatures may differ. When upgrading MC:
 
-1. 对照 Parchment 源核对 `@Inject` 目标
-2. 更新 `translator.mixins.json`
-3. 验证 `accesstransformer.cfg` 中符号名
+1. Verify `@Inject` targets against Parchment sources
+2. Update `translator.mixins.json`
+3. Check symbol names in `accesstransformer.cfg`
 
-当前暂未移植（待后续版本对齐）的 mixin：计分板、标题/副标题、书本界面、聊天输入框、TextDisplay 实体。
+Mixins not yet ported (pending alignment): scoreboard, title/subtitle, book UI, chat input, TextDisplay entity.
 
-## 发布流程
+## Release workflow
 
 ```bash
 git tag -a vX.Y.Z -m "Release X.Y.Z"
 git push origin vX.Y.Z
 ```
 
-tag 推送后 `release.yml` 自动构建 JAR 并创建 GitHub Release。
+Pushing the tag triggers `release.yml` to build the JAR and create a GitHub Release.
 
-本地指定版本号构建：
+Local build with explicit version:
 
 ```bash
 ./gradlew clean build -Pmod_version=X.Y.Z
 ```
 
-输出：`build/libs/Translator-1.21.1-X.Y.Z.jar`
+Output: `build/libs/Translator-1.21.1-X.Y.Z.jar`
+
+## Related docs
+
+- [PUBLISH.md](../modrinth/PUBLISH.md) — Modrinth publishing
+- [DEV.md](DEV.md) — Development guide

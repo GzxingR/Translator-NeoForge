@@ -8,7 +8,7 @@
 
 **NeoForge 1.21.1** 游戏内翻译模组 — 无侵入式翻译聊天、HUD、世界文字、Tooltip、书本等内容。
 
-**作者与维护者：** [Gstar](https://github.com/GzxingR) · **AI 辅助开发**（Cursor）· 独立 NeoForge 项目，设计参考见 [CREDITS.md](CREDITS.md)。
+**作者与维护者：** [Gstar](https://github.com/GzxingR) · **AI 辅助开发**（Cursor）· 独立 NeoForge 项目，设计参考见 [CREDITS_zh.md](CREDITS_zh.md)。
 
 > 本仓库为 **NeoForge 1.21.1** 独立工程，Modrinth 发布页：[translator-neoforge](https://modrinth.com/mod/translator-neoforge)
 
@@ -37,7 +37,7 @@
 3. 将 `Translator-1.21.1-<版本>.jar` 放入 `mods/`
 4. 进游戏：按 **U** 打开选项，或 `/transconfig config` 配置 API 密钥
 
-完整指令说明：[docs/INSTALL.md](docs/INSTALL.md)（中文）
+完整指令说明：[docs/INSTALL_zh.md](docs/INSTALL_zh.md)
 
 ## 快速开始（腾讯云）
 
@@ -55,7 +55,7 @@
 ./gradlew test build
 ```
 
-详见 [docs/DEV.md](docs/DEV.md)
+详见 [docs/DEV_zh.md](docs/DEV_zh.md)
 
 ## 发布到 Modrinth
 
@@ -64,16 +64,17 @@ $env:MODRINTH_TOKEN = "你的Token"
 ./scripts/publish-modrinth.ps1
 ```
 
-说明：[modrinth/PUBLISH.md](modrinth/PUBLISH.md)
+说明：[modrinth/PUBLISH_zh.md](modrinth/PUBLISH_zh.md)
 
 ## 相关链接
 
 - **Modrinth：** https://modrinth.com/mod/translator-neoforge
 - **源码：** https://github.com/GzxingR/Translator-NeoForge
+- **English README：** [README.md](README.md)
 - **问题反馈：** https://github.com/GzxingR/Translator-NeoForge/issues
-- **更新日志：** [CHANGELOG.md](CHANGELOG.md)
-- **致谢：** [CREDITS.md](CREDITS.md)
+- **更新日志：** [CHANGELOG_zh.md](CHANGELOG_zh.md)
+- **致谢：** [CREDITS_zh.md](CREDITS_zh.md)
 
 ## 许可证
 
-[GPL-3.0](LICENSE) — 署名见 [CREDITS.md](CREDITS.md)。
+[GPL-3.0](LICENSE) — 署名见 [CREDITS_zh.md](CREDITS_zh.md)。

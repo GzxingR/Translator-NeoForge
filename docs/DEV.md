@@ -1,12 +1,14 @@
-# 开发指南 (NeoForge 1.21.1)
+# Development Guide (NeoForge 1.21.1)
 
-## 环境要求
+**English** | [中文 Chinese](DEV_zh.md)
+
+## Requirements
 
 - JDK 21
 - Git
-- 可选：IDE（IntelliJ IDEA / VS Code + Java 扩展）
+- Optional: IDE (IntelliJ IDEA / VS Code + Java extensions)
 
-## 克隆与构建
+## Clone & build
 
 ```bash
 git clone <repository-url>
@@ -14,45 +16,51 @@ cd Translator-1.21.1-neoforge
 ./gradlew build
 ```
 
-Windows 使用 `gradlew.bat`。
+On Windows use `gradlew.bat`.
 
-## 本地运行客户端
+## Run client locally
 
 ```bash
 ./gradlew runClient
 ```
 
-首次运行会下载 Minecraft 与 NeoForge 依赖，耗时较长。
+First run downloads Minecraft and NeoForge dependencies (may take a while).
 
-## 运行时前置 Mod
+## Runtime mods
 
-将以下 mod 放入 `run/mods/`（或通过 Gradle 自动拉取 Cloth Config）：
+Place mods in `run/mods/` (Cloth Config is pulled via Gradle):
 
-| Mod | 版本 | 说明 |
-|-----|------|------|
-| Cloth Config | 15.0.127 (NeoForge) | 配置界面，已在 Gradle 中声明 |
-| ModMenu (NeoForge Edition) | 1.0.1+ | 可选，Mod 列表配置入口 |
+| Mod | Version | Notes |
+|-----|---------|-------|
+| Cloth Config | 15.0.127 (NeoForge) | Config UI; declared in Gradle |
+| ModMenu (NeoForge Edition) | 1.0.1+ | Optional mod-list config entry |
 
-无 ModMenu 时仍可通过 **U 键** 或 `/translate config` 打开配置。
+Without ModMenu, use **U** or `/transconfig config` to open settings.
 
-## 常用 Gradle 任务
+## Common Gradle tasks
 
-| 任务 | 说明 |
-|------|------|
-| `./gradlew runClient` | 启动开发客户端 |
-| `./gradlew test` | 运行单元测试 |
-| `./gradlew build` | 编译并打包 JAR |
-| `./gradlew clean --refresh-dependencies` | 清理并刷新依赖 |
+| Task | Description |
+|------|-------------|
+| `./gradlew runClient` | Launch dev client |
+| `./gradlew test` | Run unit tests |
+| `./gradlew build` | Compile and package JAR |
+| `./gradlew clean --refresh-dependencies` | Clean and refresh dependencies |
 
-## 项目结构
+## Project layout
 
 ```
-src/main/common/   # 平台无关业务逻辑
-src/main/java/     # NeoForge 平台层（mixin、命令、屏幕）
-src/main/resources/# 资源、mixins、Access Transformer
-src/test/java/     # JUnit 单元测试
+src/main/common/   # Platform-agnostic logic
+src/main/java/     # NeoForge layer (mixins, commands, screens)
+src/main/resources/# Resources, mixins, Access Transformer
+src/test/java/     # JUnit tests
 ```
 
-## 版本属性
+## Version properties
 
-见 `gradle.properties`：`minecraft_version=1.21.1`，`neo_version=21.1.233`。
+See `gradle.properties`: `minecraft_version=1.21.1`, `neo_version=21.1.233`.
+
+## Related docs
+
+- [INSTALL.md](INSTALL.md) — Installation & commands
+- [TEST.md](TEST.md) — Testing guide
+- [MAINTAIN.md](MAINTAIN.md) — Maintenance guide

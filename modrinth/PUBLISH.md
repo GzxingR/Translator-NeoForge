@@ -1,43 +1,45 @@
-# Modrinth 发布指南（NeoForge 1.21.1）
+# Modrinth Publishing Guide (NeoForge 1.21.1)
 
-本项目使用 [Minotaur](https://github.com/modrinth/minotaur)，发布到 **[Translator (NeoForge)](https://modrinth.com/mod/translator-neoforge)**（slug: `translator-neoforge`）。
+**English** | [中文 Chinese](PUBLISH_zh.md)
 
-## 页面语言
+This project uses [Minotaur](https://github.com/modrinth/minotaur) to publish to **[Translator (NeoForge)](https://modrinth.com/mod/translator-neoforge)** (slug: `translator-neoforge`).
 
-| 文件 | 语言 | 用途 |
-|------|------|------|
-| `modrinth/body.md` | **English（主）** | 同步到 Modrinth（`modrinthSyncBody`） |
-| `modrinth/body_zh-CN.md` | 简体中文（辅） | 仅 GitHub，链自英文页底部 |
-| `README_zh-CN.md` | 简体中文（辅） | GitHub 中文简介 |
+## Page languages
 
-## 一、发布前检查
+| File | Language | Purpose |
+|------|----------|---------|
+| `modrinth/body.md` | **English (primary)** | Synced to Modrinth (`modrinthSyncBody`) |
+| `modrinth/body_zh.md` | Simplified Chinese (supplement) | GitHub only; linked from English page footer |
+| `README_zh.md` | Simplified Chinese (supplement) | GitHub Chinese overview |
 
-- [ ] `./gradlew test build` 通过
-- [ ] `gradle.properties` 中 `mod_version` 已更新
-- [ ] `CHANGELOG.md` 已填写
-- [ ] 已配置 Modrinth API Token
+## Pre-release checklist
 
-## 二、命令行发布
+- [ ] `./gradlew test build` passes
+- [ ] `mod_version` updated in `gradle.properties`
+- [ ] `CHANGELOG.md` updated
+- [ ] Modrinth API token configured
+
+## Command-line publish
 
 ```powershell
-$env:MODRINTH_TOKEN = "你的Token"
+$env:MODRINTH_TOKEN = "your-token"
 ./scripts/publish-modrinth.ps1
 ```
 
-同步 Modrinth **英文** 长描述：
+Sync Modrinth **English** long description:
 
 ```powershell
 ./gradlew modrinthSyncBody --no-configuration-cache
 ```
 
-## 三、GitHub Release
+## GitHub Release
 
 ```bash
 git tag -a v1.21.1-0.0.1 -m "Release"
 git push origin v1.21.1-0.0.1
 ```
 
-## 四、依赖 Modrinth ID
+## Modrinth dependency IDs
 
 | Mod | Project ID |
 |-----|------------|

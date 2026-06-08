@@ -1,7 +1,9 @@
 # Modrinth 页面文案（中文补充）
 
-> **说明：** Modrinth 主页面以 **英文** 为准（`body.md`）。本文件为 **GitHub 上的中文补充**，不会覆盖 Modrinth 英文描述。  
+> **说明：** Modrinth 主页面以 **英文** 为准（[body.md](body.md)）。本文件为 **GitHub 上的中文补充**，不会覆盖 Modrinth 英文描述。  
 > 英文主文档：[body.md](body.md) · [Modrinth 项目页](https://modrinth.com/mod/translator-neoforge)
+
+[English](body.md) | **中文 Chinese**
 
 本模组是 Minecraft **游戏内翻译工具**，可在**不修改世界数据**的前提下翻译聊天、计分板、Boss 条、标题、Tooltip、告示牌、TextDisplay 悬浮字、书本等。
 
@@ -37,5 +39,5 @@
 
 ## 详细中文文档
 
-👉 [docs/INSTALL.md（安装与全部指令）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL.md)  
-👉 [README_zh-CN.md](https://github.com/GzxingR/Translator-NeoForge/blob/main/README_zh-CN.md)
+👉 [docs/INSTALL_zh.md（安装与全部指令）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL_zh.md)  
+👉 [README_zh.md](https://github.com/GzxingR/Translator-NeoForge/blob/main/README_zh.md)

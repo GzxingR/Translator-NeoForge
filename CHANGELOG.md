@@ -1,5 +1,7 @@
 # Changelog
 
+**English** | [中文 Chinese](CHANGELOG_zh.md)
+
 All notable changes to the **NeoForge 1.21.1** port are documented here.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/).

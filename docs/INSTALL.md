@@ -1,345 +1,343 @@
-# 安装与使用指南（NeoForge 1.21.1）
+# Installation & Usage Guide (NeoForge 1.21.1)
 
-本文说明 **Translator / 翻译器** 模组需要安装哪些前置，以及游戏内全部指令的中文含义与用法。
+**English** | [中文 Chinese](INSTALL_zh.md)
+
+This guide covers required dependencies for **Translator** and all in-game commands.
 
 ---
 
-## 一、环境要求
+## 1. Requirements
 
-| 项目 | 版本 |
-|------|------|
+| Item | Version |
+|------|---------|
 | Minecraft | **1.21.1** |
-| 模组加载器 | **NeoForge 21.1.233** 或更高 |
-| Java | **21**（启动器需使用 Java 21） |
+| Mod loader | **NeoForge 21.1.233** or newer |
+| Java | **21** (launcher must use Java 21) |
 
 ---
 
-## 二、需要安装的 Mod
+## 2. Mods to Install
 
-将以下文件放入 `.minecraft/mods/`（或整合包的 `mods` 文件夹）：
+Place the following in `.minecraft/mods/` (or your pack's `mods` folder):
 
-### 必需
+### Required
 
-| Mod | 推荐版本 | 说明 |
-|-----|----------|------|
-| **NeoForge** | 21.1.233+ | 模组加载器，必须先装 |
-| **Cloth Config API**（NeoForge 版） | **15.0.127+** | 配置界面依赖；**不装会导致模组无法启动** |
-| **Translator / 翻译器** | 本模组 JAR | 主模组 |
+| Mod | Recommended | Notes |
+|-----|-------------|-------|
+| **NeoForge** | 21.1.233+ | Mod loader; install first |
+| **Cloth Config API** (NeoForge) | **15.0.127+** | Config UI dependency; **mod will not start without it** |
+| **Translator** | This mod JAR | Main mod |
 
-> Cloth Config 下载关键词：`Cloth Config NeoForge 1.21.1`  
-> Modrinth / CurseForge 上选择 **NeoForge** 版本，不要下载 Fabric 版。
+> Search for: `Cloth Config NeoForge 1.21.1`  
+> On Modrinth / CurseForge, pick the **NeoForge** build — not Fabric.
 
-### 可选
+### Optional
 
-| Mod | 推荐版本 | 说明 |
-|-----|----------|------|
-| **ModMenu（NeoForge Edition）** | 1.0.1+ | 在 Mod 列表里增加「配置」按钮，更方便打开设置 |
-| **Controlling** 等按键管理 Mod | — | 方便查看/修改快捷键 |
+| Mod | Recommended | Notes |
+|-----|-------------|-------|
+| **ModMenu (NeoForge Edition)** | 1.0.1+ | Adds a "Configure" button in the mod list |
+| **Controlling** or similar | — | Easier keybind management |
 
-> **不装 ModMenu 也能正常使用。** 可通过 **U 键** 或 `/transconfig config` 打开配置界面。
+> **ModMenu is not required.** Use **U** or `/transconfig config` to open settings.
 
-### 安装顺序建议
+### Suggested install order
 
-1. 安装 NeoForge 1.21.1 启动器/实例  
-2. 放入 **Cloth Config**  
-3. 放入 **Translator**  
-4. （可选）放入 **ModMenu**  
-5. 启动游戏，确认 Mod 列表中三个模组均显示为已加载  
+1. Install NeoForge 1.21.1 instance  
+2. Add **Cloth Config**  
+3. Add **Translator**  
+4. (Optional) Add **ModMenu**  
+5. Launch and confirm all mods load  
 
 ---
 
-## 三、首次使用（以腾讯云为例）
+## 3. First-time setup (Tencent Cloud example)
 
-1. 在 [腾讯云机器翻译控制台](https://console.cloud.tencent.com/tmt) 获取 **SecretId** 与 **SecretKey**  
-2. 进入游戏后执行（将示例值替换为你的密钥）：
+1. Get **SecretId** and **SecretKey** from the [Tencent Cloud TMT console](https://console.cloud.tencent.com/tmt)  
+2. In-game (replace placeholders with your keys):
 
 ```
 /transconfig tencent AKIDxxxxxxxxxxxxxxxx SecretKeyxxxxxxxxxxxxxxxx
 ```
 
-→ **配置腾讯云翻译 API，并自动切换为「腾讯翻译」、保存配置**
+→ **Configure Tencent Cloud API, switch to Tencent translator, and save**
 
-3. 设置翻译语言：
+3. Set languages:
 
 ```
-/transconfig language "自动" "中文(简体)"
+/transconfig language "Auto" "Chinese (Simplified)"
 ```
 
-→ **将源语言设为自动检测，目标语言设为简体中文**
+→ **Auto-detect source language; target Simplified Chinese**
 
-4. 按 **U** 打开选项，按需开启「翻译聊天」「翻译标题」「翻译计分板」等开关  
-
----
-
-## 四、快捷键
-
-| 按键 | 中文说明 |
-|------|----------|
-| **U** | 打开翻译选项（自动翻译开关、翻译距离等） |
-| **O** | 屏幕 OCR 识别并翻译（需当前翻译器支持图片/OCR） |
+4. Press **U** and enable options such as chat, title, and scoreboard translation  
 
 ---
 
-## 五、指令一览
+## 4. Hotkeys
 
-> 所有指令均在**客户端**执行（单人或多人在本地客户端均可）。  
-> 带空格或中文的参数请用英文双引号 `"..."` 包裹。  
-> 每条指令后 **→** 后为中文说明。
+| Key | Description |
+|-----|-------------|
+| **U** | Open translation options (auto-translate toggles, distance, etc.) |
+| **O** | Screen OCR and translate (requires image/OCR-capable translator) |
 
 ---
 
-### 5.1 翻译指令
+## 5. Commands
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/translate <文本>` | 将文本从当前「源语言」翻译为「目标语言」，结果可复制 |
-| `/translate-re <文本>` | 反向翻译（目标语言 → 源语言） |
+> All commands run on the **client** (single-player or multiplayer local client).  
+> Wrap parameters with spaces or non-ASCII text in double quotes `"..."`.  
+> Lines ending with **→** explain what the command does.
 
-**示例：**
+---
+
+### 5.1 Translation commands
+
+| Command | Description |
+|---------|-------------|
+| `/translate <text>` | Translate from current source to target language; result is copyable |
+| `/translate-re <text>` | Reverse translation (target → source) |
+
+**Examples:**
 
 ```
 /translate Hello world
 ```
-→ 把 `Hello world` 翻译成当前设定的目标语言
+→ Translate `Hello world` to the configured target language
 
 ```
 /translate-re 你好世界
 ```
-→ 把 `你好世界` 反向翻译回源语言
+→ Reverse-translate back to the source language
 
 ---
 
-### 5.2 配置指令 `/transconfig`
+### 5.2 Configuration `/transconfig`
 
-#### 语言
+#### Language
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig language` | 查看当前源语言与目标语言 |
-| `/transconfig language "<源语言>"` | 仅设置源语言 |
-| `/transconfig language "<源语言>" "<目标语言>"` | 同时设置源语言与目标语言 |
+| Command | Description |
+|---------|-------------|
+| `/transconfig language` | Show current source and target languages |
+| `/transconfig language "<source>"` | Set source language only |
+| `/transconfig language "<source>" "<target>"` | Set both source and target |
 
-**常用语言名（与游戏内提示一致）：**
+**Common language names (match in-game labels):**
 
-| 指令中填写 | 含义 |
-|------------|------|
-| `"自动"` | 自动检测 |
-| `"中文(简体)"` | 简体中文 |
-| `"英语"` | 英语 |
-| `"日语"` | 日语 |
-| `"韩语"` | 韩语 |
-| `"法语"` | 法语 |
-| `"德语"` | 德语 |
-| `"俄语"` | 俄语 |
-| `"葡萄牙语"` | 葡萄牙语 |
+| Value | Meaning |
+|-------|---------|
+| `"Auto"` | Auto-detect |
+| `"Chinese (Simplified)"` | Simplified Chinese |
+| `"English"` | English |
+| `"Japanese"` | Japanese |
+| `"Korean"` | Korean |
+| `"French"` | French |
+| `"German"` | German |
+| `"Russian"` | Russian |
+| `"Portuguese"` | Portuguese |
 
-**示例：**
+**Example:**
 
 ```
-/transconfig language "自动" "中文(简体)"
+/transconfig language "Auto" "Chinese (Simplified)"
 ```
-→ 自动检测原文，翻译为简体中文
+→ Auto-detect source; translate to Simplified Chinese
 
 ---
 
-#### 翻译器切换与 API 配置
+#### Translator selection & API setup
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig translator` | 查看当前使用的翻译器及是否已配置 API |
-| `/transconfig translator "<翻译器名>"` | 切换当前翻译器（不修改 API 密钥） |
+| Command | Description |
+|---------|-------------|
+| `/transconfig translator` | Show active translator and API configuration status |
+| `/transconfig translator "<name>"` | Switch translator (does not change API keys) |
 
-**内置翻译器名称：**
+**Built-in translator names:**
 
-| 名称 | 说明 |
-|------|------|
-| `"百度翻译"` | 百度翻译 API |
-| `"有道翻译"` | 有道翻译 API |
-| `"腾讯翻译"` | 腾讯云机器翻译 API |
-| `"Bing翻译"` | 微软 Bing 翻译（无需密钥，有频率限制） |
+| Name | Service |
+|------|---------|
+| `"Baidu Translate"` | Baidu Translate API |
+| `"Youdao Translate"` | Youdao Translate API |
+| `"Tencent Translate"` | Tencent Cloud Machine Translation |
+| `"Bing Translate"` | Microsoft Bing (no key; rate-limited) |
 
 ---
 
-##### 腾讯云（推荐快捷写法）
+##### Tencent Cloud (shortcut)
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig tencent <SecretId> <SecretKey>` | 配置腾讯云密钥（默认区域 `ap-guangzhou`，项目 ID `0`），并启用腾讯翻译 |
-| `/transconfig tencent <SecretId> <SecretKey> <区域>` | 同上，并指定区域（如 `ap-shanghai`） |
-| `/transconfig tencent <SecretId> <SecretKey> <区域> <项目ID>` | 同上，并指定腾讯云项目 ID |
+| Command | Description |
+|---------|-------------|
+| `/transconfig tencent <SecretId> <SecretKey>` | Configure keys (default region `ap-guangzhou`, project ID `0`); enable Tencent |
+| `/transconfig tencent <SecretId> <SecretKey> <region>` | Same with custom region (e.g. `ap-shanghai`) |
+| `/transconfig tencent <SecretId> <SecretKey> <region> <projectId>` | Same with Tencent project ID |
 
-**示例：**
+**Examples:**
 
 ```
 /transconfig tencent AKIDxxxxxxx yourSecretKey
 ```
-→ 使用广州区域配置并启用腾讯翻译
+→ Guangzhou region; enable Tencent translator
 
 ```
 /transconfig tencent AKIDxxxxxxx yourSecretKey ap-shanghai 0
 ```
-→ 使用上海区域配置并启用腾讯翻译
+→ Shanghai region; enable Tencent translator
 
 ---
 
-##### 通过翻译器节点配置（与上面等效）
+##### Via translator node (equivalent)
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig translator "腾讯翻译" <SecretId> <SecretKey>` | 配置腾讯云 SecretId / SecretKey 并启用 |
-| `/transconfig translator "腾讯翻译" <SecretId> <SecretKey> <区域>` | 配置密钥 + 区域并启用 |
-| `/transconfig translator "腾讯翻译" <SecretId> <SecretKey> <区域> <项目ID>` | 配置密钥 + 区域 + 项目 ID 并启用 |
-| `/transconfig translator "百度翻译" <QPS> <AppId> <AppKey>` | 配置百度翻译（QPS 为每秒请求上限，如 `10` 表示每秒最多 10 次） |
-| `/transconfig translator "有道翻译" <AppId> <AppKey>` | 配置有道翻译并启用 |
+| Command | Description |
+|---------|-------------|
+| `/transconfig translator "Tencent Translate" <SecretId> <SecretKey>` | Configure Tencent keys and enable |
+| `/transconfig translator "Tencent Translate" <SecretId> <SecretKey> <region>` | Keys + region |
+| `/transconfig translator "Tencent Translate" <SecretId> <SecretKey> <region> <projectId>` | Keys + region + project ID |
+| `/transconfig translator "Baidu Translate" <QPS> <AppId> <AppKey>` | Baidu (QPS = max requests/sec, e.g. `10`) |
+| `/transconfig translator "Youdao Translate" <AppId> <AppKey>` | Youdao and enable |
 
-**示例：**
-
-```
-/transconfig translator "腾讯翻译" AKIDxxxxxxx yourSecretKey
-```
-→ 配置并启用腾讯翻译
+**Examples:**
 
 ```
-/transconfig translator "百度翻译" 10 2024xxxxxx yourAppKey
+/transconfig translator "Tencent Translate" AKIDxxxxxxx yourSecretKey
 ```
-→ 配置百度翻译，QPS 限制为 10，并启用
+→ Configure and enable Tencent
 
 ```
-/transconfig translator "有道翻译" yourAppId yourAppKey
+/transconfig translator "Baidu Translate" 10 2024xxxxxx yourAppKey
 ```
-→ 配置有道翻译并启用
+→ Baidu with QPS 10
+
+```
+/transconfig translator "Youdao Translate" yourAppId yourAppKey
+```
+→ Configure and enable Youdao
 
 ---
 
-#### 缓存与重载
+#### Cache & reload
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig clearcache` | 清空翻译缓存 |
-| `/transconfig reload` | 从磁盘重新读取配置文件 |
-
----
-
-#### 配置界面
-
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig config` | 打开 Cloth Config 图形配置界面（填写 API、切换翻译器等） |
-| `/transconfig config json` | 打开 JSON 文本配置编辑器 |
+| Command | Description |
+|---------|-------------|
+| `/transconfig clearcache` | Clear translation cache |
+| `/transconfig reload` | Reload config from disk |
 
 ---
 
-#### 聊天格式
+#### Config UI
 
-用于从聊天消息中提取需要翻译的正文（例如去掉 `<玩家名>` 前缀）。
+| Command | Description |
+|---------|-------------|
+| `/transconfig config` | Open Cloth Config GUI |
+| `/transconfig config json` | Open JSON text editor |
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/transconfig chat-format` | 查看当前聊天匹配格式 |
-| `/transconfig chat-format <格式名>` | 切换聊天格式 |
+---
 
-**可用格式名：**
+#### Chat format
 
-| 格式名 | 中文说明 |
-|--------|----------|
-| `none` | 不匹配，整句翻译 |
-| `normal` | 普通格式：`<玩家名> 消息内容` |
-| `hypixel` | Hypixel 风格：`前缀: 消息内容` |
+Extract translatable text from chat (e.g. strip `<player>` prefix).
 
-**示例：**
+| Command | Description |
+|---------|-------------|
+| `/transconfig chat-format` | Show current chat format |
+| `/transconfig chat-format <name>` | Switch chat format |
+
+**Available formats:**
+
+| Name | Description |
+|------|-------------|
+| `none` | No pattern; translate entire message |
+| `normal` | `<player> message` |
+| `hypixel` | Hypixel-style `prefix: message` |
+
+**Example:**
 
 ```
 /transconfig chat-format hypixel
 ```
-→ 切换为 Hypixel 风格聊天提取规则
+→ Use Hypixel-style extraction
 
 ---
 
-### 5.3 LLM / OpenAI 兼容接口指令
+### 5.3 LLM / OpenAI-compatible commands
 
-以下指令也可通过 `/transconfig llm ...` 访问（效果相同）。
+Also available as `/transconfig llm ...` (same effect).
 
-| 指令 | 中文说明 |
-|------|----------|
-| `/llm list` | 列出已配置的 LLM 模型 |
-| `/llm add <名称> <URL> <模型名> <APIKey>` | 添加一个 OpenAI 兼容的 LLM 翻译模型 |
-| `/llm remove "<名称>"` | 删除指定 LLM 模型 |
-| `/llm use "<名称>"` | 切换当前翻译器到该 LLM 模型 |
-| `/llm builtin` | 显示内置 LLM 模板列表 |
+| Command | Description |
+|---------|-------------|
+| `/llm list` | List configured LLM models |
+| `/llm add <name> <URL> <model> <APIKey>` | Add OpenAI-compatible LLM translator |
+| `/llm remove "<name>"` | Remove LLM model |
+| `/llm use "<name>"` | Switch active translator to LLM |
+| `/llm builtin` | Show built-in LLM templates |
 
-**示例：**
+**Examples:**
 
 ```
 /llm add mygpt https://api.openai.com/v1/chat/completions gpt-4o-mini sk-xxxxxxxx
 ```
-→ 添加名为 `mygpt` 的 OpenAI 兼容模型
+→ Add model `mygpt`
 
 ```
 /llm use "mygpt"
 ```
-→ 切换当前翻译器到 `mygpt`
+→ Switch to `mygpt`
 
 ---
 
-## 六、游戏内选项（U 键）
+## 6. In-game options (U key)
 
-按 **U** 可开关以下功能（无需记指令）：
+Press **U** to toggle (no commands needed):
 
-| 选项 | 中文说明 |
-|------|----------|
-| 聊天翻译提示 | 打开聊天栏时，在消息末尾显示 `[翻译]` 按钮 |
-| 翻译聊天 | 新聊天消息自动翻译 |
-| 翻译工具提示 | 鼠标悬停物品约 0.4 秒后翻译 Tooltip |
-| 翻译标题 | 自动翻译屏幕标题 / 副标题（ActionBar） |
-| 翻译计分板 | 自动翻译侧边栏计分板 |
-| 翻译 boss 栏 | 自动翻译 Boss 血条文字 |
-| 翻译实体名 | 自动翻译实体显示名（含 TextDisplay 等） |
-| 翻译玩家名 | 自动翻译玩家名称 |
-| 翻译告示牌 | 自动翻译告示牌文字 |
-| 告示牌结合翻译 | 多行告示牌合并翻译（更准确，可能截断） |
-| 翻译距离 | 实体/告示牌超出该格数则不翻译（100 = 无限） |
+| Option | Description |
+|--------|-------------|
+| Chat translate hint | Show `[Translate]` button on chat messages |
+| Auto translate chat | Auto-translate new chat |
+| Auto translate tooltip | Translate item tooltip after ~0.4s hover |
+| Auto translate title | Auto-translate title / subtitle (action bar) |
+| Auto translate scoreboard | Auto-translate sidebar scoreboard |
+| Auto translate boss bar | Auto-translate boss bar text |
+| Auto translate entity name | Entity display names (incl. TextDisplay) |
+| Auto translate player name | Player names |
+| Auto translate sign | Sign text |
+| Sign combine translate | Merge multi-line signs (more accurate, may truncate) |
+| Translate distance | Skip entities/signs beyond range (100 = unlimited) |
 
-**书本界面：** 打开书（阅读/编辑）时，界面会出现 **「翻译」** 按钮，点击后异步翻译当前页内容。
+**Books:** When reading/editing a book, a **Translate** button appears; click to async-translate the current page.
 
 ---
 
-## 七、配置文件位置
-
-配置保存在：
+## 7. Config file location
 
 ```
 config/translator/
 ```
 
-主要文件：
+| File | Purpose |
+|------|---------|
+| `config.json` | Active translator, languages, API keys |
+| `prompt.txt` | Custom LLM prompt (advanced) |
 
-| 文件 | 说明 |
-|------|------|
-| `config.json` | 当前翻译器、语言、各 API 密钥等 |
-| `prompt.txt` | LLM 自定义提示词（高级） |
-
-修改后可在游戏内执行 `/transconfig reload` 重新加载。
+After editing, run `/transconfig reload` in-game.
 
 ---
 
-## 八、常见问题
+## 8. FAQ
 
-**Q：游戏启动报错，提示缺少 Cloth Config？**  
-A：请安装 **Cloth Config NeoForge 1.21.1**（15.0.127+），且不要装 Fabric 版。
+**Q: Game crashes — missing Cloth Config?**  
+A: Install **Cloth Config NeoForge 1.21.1** (15.0.127+); not the Fabric build.
 
-**Q：配置了 API 仍提示「未配置」？**  
-A：确认指令中的 SecretId / SecretKey 无多余空格；执行 `/transconfig translator` 查看状态；必要时 `/transconfig reload`。
+**Q: API configured but still "not configured"?**  
+A: Check SecretId/SecretKey for extra spaces; run `/transconfig translator`; try `/transconfig reload`.
 
-**Q：ModMenu 是必须的吗？**  
-A：不是。用 **U 键** 或 `/transconfig config` 即可配置。
+**Q: Is ModMenu required?**  
+A: No. Use **U** or `/transconfig config`.
 
-**Q：腾讯云区域填什么？**  
-A：常用 `ap-guangzhou`（广州）、`ap-shanghai`（上海）、`ap-beijing`（北京），与腾讯云控制台开通的地域一致即可。
+**Q: Which Tencent region?**  
+A: Common values: `ap-guangzhou`, `ap-shanghai`, `ap-beijing` — match your console region.
 
 ---
 
-## 九、相关文档
+## 9. Related docs
 
-- [DEV.md](DEV.md) — 开发与构建
-- [TEST.md](TEST.md) — 测试与验收清单
-- [MAINTAIN.md](MAINTAIN.md) — 版本维护说明
+- [DEV.md](DEV.md) — Development & build
+- [TEST.md](TEST.md) — Testing checklist
+- [MAINTAIN.md](MAINTAIN.md) — Maintenance & releases

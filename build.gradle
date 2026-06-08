@@ -128,7 +128,7 @@ modrinth {
     gameVersions = [minecraft_version]
     loaders = ['neoforge']
     changelog = providers.fileContents(layout.projectDirectory.file('CHANGELOG.md')).asText
-    syncBodyFrom = rootProject.file('modrinth/body_zh-CN.md').text
+    syncBodyFrom = rootProject.file('modrinth/body.md').text
 
     dependencies {
         required.project modrinth_cloth_config_id

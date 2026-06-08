@@ -21,7 +21,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Test and build
-        run: ./gradlew test build
+        run: ./gradlew test build --no-configuration-cache
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4

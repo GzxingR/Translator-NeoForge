@@ -57,10 +57,6 @@
 
 详见 [docs/DEV.md](docs/DEV.md)
 
-## AI 辅助开发
-
-后续使用 Cursor、DeepSeek V4 Pro 等 AI 时，请阅读 **[ai-handoff/](ai-handoff/README.md)**（提示词、工程说明、脚本）。
-
 ## 发布到 Modrinth
 
 ```powershell

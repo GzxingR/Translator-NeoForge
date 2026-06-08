@@ -59,10 +59,6 @@ Press **U** and enable **Auto translate chat** / **Auto translate entity names**
 
 See [docs/DEV.md](docs/DEV.md).
 
-## AI-assisted development
-
-For **Cursor, DeepSeek V4 Pro**, or other AI tools, use the self-contained kit in **[ai-handoff/](ai-handoff/README.md)** (prompts, project overview, scripts).
-
 ## Publish to Modrinth
 
 ```powershell

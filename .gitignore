@@ -51,3 +51,6 @@ HostHeaderTest.java
 *.env
 **/translator.json
 !config/translator/.gitkeep
+
+### Local only (do not commit) ###
+ai-handoff/

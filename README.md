@@ -1,6 +1,6 @@
-# Translator / 翻译器
+# Translator
 
-[English](README.md) | [简体中文](README_zh-CN.md)
+**English** | [中文 Chinese](README_zh-CN.md)
 
 [![Modrinth](https://img.shields.io/modrinth/dt/translator-neoforge?logo=modrinth&label=Modrinth&style=flat-square&color=00af5c)](https://modrinth.com/mod/translator-neoforge)
 [![Game versions](https://img.shields.io/modrinth/game-versions/translator-neoforge?logo=modrinth&style=flat-square)](https://modrinth.com/mod/translator-neoforge/versions)
@@ -72,6 +72,7 @@ Details: [modrinth/PUBLISH.md](modrinth/PUBLISH.md)
 
 - **Modrinth:** https://modrinth.com/mod/translator-neoforge
 - **Source:** https://github.com/GzxingR/Translator-NeoForge
+- **中文 Chinese:** [README_zh-CN.md](README_zh-CN.md)
 - **Issues:** https://github.com/GzxingR/Translator-NeoForge/issues
 - **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 - **Credits:** [CREDITS.md](CREDITS.md)

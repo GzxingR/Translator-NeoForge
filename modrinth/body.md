@@ -43,14 +43,13 @@ Configure your own API keys in-game (Cloth Config or commands):
    ```
 4. Press **U** and enable the auto-translate options you need.
 
-Full command reference (English): [docs/INSTALL.md](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL.md)
+Full command reference: [docs/INSTALL.md](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL.md)
 
 ---
 
-## 中文文档 / Chinese documentation
+## Chinese documentation
 
-Modrinth 页面以英文为主。完整中文说明请见 GitHub：
+Simplified Chinese guides are on **GitHub** (this Modrinth page is English-only):
 
-- [README_zh-CN.md（中文简介）](https://github.com/GzxingR/Translator-NeoForge/blob/main/README_zh-CN.md)
-- [modrinth/body_zh-CN.md（中文 Modrinth 补充说明）](https://github.com/GzxingR/Translator-NeoForge/blob/main/modrinth/body_zh-CN.md)
-- [docs/INSTALL.md（安装与全部指令，中文）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL.md)
+- [README — 中文简介](https://github.com/GzxingR/Translator-NeoForge/blob/main/README_zh-CN.md)
+- [Installation & commands — 安装与全部指令（中文）](https://github.com/GzxingR/Translator-NeoForge/blob/main/docs/INSTALL.md)

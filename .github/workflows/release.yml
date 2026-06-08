@@ -46,6 +46,7 @@ jobs:
           prerelease: false
 
       - name: Publish to Modrinth
+        continue-on-error: true
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: ./gradlew modrinth -Pmod_version=$VERSION --no-configuration-cache

@@ -60,7 +60,11 @@ class TencentTranslatorIntegrationTest {
 
     @Test
     void canLoadCreativeCoOperationConfigWhenPresent() throws Exception {
-        Path configPath = Path.of(System.getenv("APPDATA"), ".minecraft", "versions", "Creative Co-Operation", "config", "translator.json");
+        String appData = System.getenv("APPDATA");
+        if (appData == null || appData.isBlank()) {
+            return;
+        }
+        Path configPath = Path.of(appData, ".minecraft", "versions", "Creative Co-Operation", "config", "translator.json");
         if (!Files.exists(configPath)) {
             return;
         }

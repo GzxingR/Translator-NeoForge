@@ -1,0 +1,165 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.141'
+    id 'com.modrinth.minotaur' version '2.9.0'
+    id 'idea'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = project.hasProperty('mod_version') ? project.mod_version : mod_version
+group = mod_group_id
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/common'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir('src/generated/resources')
+    exclude("**/*.bbmodel")
+    exclude("src/generated/**/.cache")
+}
+
+repositories {
+    maven { url = 'https://maven.architectury.dev/' }
+    maven { url = 'https://maven.shedaniel.me/' }
+    maven { url = 'https://maven.terraformersmc.com/' }
+}
+
+base {
+    archivesName = archives_base_name
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+    localRuntime "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'com.google.code.gson:gson:2.10.1'
+    testImplementation 'org.apache.commons:commons-lang3:3.14.0'
+    testImplementation 'org.apache.logging.log4j:log4j-api:2.22.1'
+    testImplementation 'com.google.guava:guava:33.0.0-jre'
+}
+
+tasks.named('test', Test).configure {
+    useJUnitPlatform()
+}
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_min        : neo_version_min,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : version,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.named('jar', Jar).configure {
+    archiveFileName = "${archives_base_name}-${minecraft_version}-${version}.jar"
+}
+
+modrinth {
+    token = System.getenv('MODRINTH_TOKEN')
+    projectId = modrinth_project_id
+    versionNumber = "${minecraft_version}-${version}"
+    versionName = "NeoForge ${minecraft_version} - ${version}"
+    versionType = 'release'
+    uploadFile = jar
+    gameVersions = [minecraft_version]
+    loaders = ['neoforge']
+    changelog = providers.fileContents(layout.projectDirectory.file('CHANGELOG.md')).asText
+    syncBodyFrom = rootProject.file('modrinth/body.md').text
+
+    dependencies {
+        required.project modrinth_cloth_config_id
+    }
+}
+
+tasks.named('modrinth').configure {
+    dependsOn 'build'
+    onlyIf { System.getenv('MODRINTH_TOKEN') != null }
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = "file://${project.projectDir}/repo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

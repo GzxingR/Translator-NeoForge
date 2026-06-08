@@ -1,0 +1,29 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "kgg.translator.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DrawContextMixinTooltip",
+    "ScreenMixinForChat",
+    "world.SignTextMixin",
+    "world.EntityRendererMixin"
+  ],
+  "client": [
+    "hud.BossBarHudMixin",
+    "hud.ChatComponentAccessor",
+    "hud.ChatHudMixin",
+    "hud.ChatScreenMixin",
+    "hud.GuiForScoreboardMixin",
+    "hud.GuiForTitleMixin",
+    "screen.BookEditScreenMixin",
+    "screen.BookViewScreenMixin",
+    "screen.ScreenFieldsAccessor",
+    "screen.ScreenInvoker",
+    "world.SignBlockEntityRendererMixin",
+    "world.TextDisplayEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

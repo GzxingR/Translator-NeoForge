@@ -1,0 +1,107 @@
+package kgg.translator;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import kgg.translator.translator.LLMTranslator;
+import kgg.translator.translator.LLMTranslatorFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class LLMManager {
+    private static String prompt;
+    private static final Gson gson = new Gson();
+    private static final Map<String, Model> models = new HashMap<>();
+    private static LLMTranslatorFactory translatorFactory = model -> {
+        throw new IllegalStateException("LLM translator factory not initialized");
+    };
+
+    public static void setTranslatorFactory(LLMTranslatorFactory factory) {
+        translatorFactory = factory;
+    }
+
+    public static void writeConfig(JsonObject object) {
+        object.add("models", gson.toJsonTree(models, new TypeToken<Map<String, Model>>(){}.getType()));
+    }
+
+    public static void readConfig(JsonObject object) {
+        models.clear();
+        TranslatorManager.getTranslators().removeIf(translator -> translator instanceof LLMTranslator);
+        Map<String, Model> load = gson.fromJson(object.getAsJsonObject("models"), new TypeToken<Map<String, Model>>(){}.getType());
+        if (load == null) {
+            addBuiltInModels();
+        } else {
+            load.forEach((name, model) -> addModel(model));
+        }
+        prompt = TranslatorConfig.read("prompt.txt");
+    }
+
+    public static String getPrompt() {
+        return prompt;
+    }
+
+    public static Map<String, Model> getModels() {
+        return models;
+    }
+
+    private static void addBuiltInModels() {
+        for (Model model : geBuiltInModels()) {
+            addModel(model);
+        }
+    }
+
+    public static Model[] geBuiltInModels() {
+        return new Model[] {
+            new Model("OpenAI", "https://api.openai.com/v1/chat/completions", "", "", -1)
+        };
+    }
+
+    public static void addModel(Model model) {
+        Model newModel = new Model(model.name, model.url.endsWith("/") ? model.url.substring(0, model.url.length() - 1) : model.url, model.model, model.apiKey, model.qps);
+
+        Model old = models.put(model.name, newModel);
+        if (old != null) {
+            TranslatorManager.getTranslators().removeIf(translator -> translator.getName().equals(old.name));
+        }
+        addLLMTranslator(newModel);
+    }
+
+    public static boolean removeModel(String name) {
+        if (models.remove(name) != null) {
+            TranslatorManager.getTranslators().removeIf(translator -> translator.getName().equals(name));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static void addLLMTranslator(Model model) {
+        TranslatorManager.addTranslator(translatorFactory.create(model));
+    }
+
+    public static class Model {
+        public String name;
+        public String url;
+        public String model;
+        public String apiKey;
+        public int qps;
+
+        public Model(String name, String url, String model, String apiKey) {
+            this(name, url, model, apiKey, -1);
+        }
+
+        public Model(String name, String url, String model, String apiKey, int qps) {
+            this.name = name == null ? "" : name;
+            this.url = url == null ? "" : url;
+            this.model = model == null ? "" : model;
+            this.apiKey = apiKey == null ? "" : apiKey;
+            this.qps = qps;
+        }
+    }
+
+    public static void setModels(Map<String, Model> newModels) {
+        models.clear();
+        models.putAll(newModels);
+    }
+}

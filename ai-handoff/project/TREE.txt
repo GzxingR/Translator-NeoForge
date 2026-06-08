@@ -1,0 +1,50 @@
+Translator-NeoForge/                    # Gradle 项目根
+├── ai-handoff/                         # AI 开发工具包（本目录）
+├── docs/                               # 人类可读文档
+├── modrinth/                           # Modrinth 发布文案
+├── scripts/                            # 发布/推送脚本
+├── .github/workflows/
+│   ├── ci.yml
+│   └── release.yml
+├── build.gradle
+├── gradle.properties
+├── settings.gradle
+├── src/main/common/kgg/translator/
+│   ├── TranslateService.java
+│   ├── TranslatorManager.java
+│   ├── TranslatorConfig.java
+│   ├── Language.java
+│   ├── ChatFormat.java
+│   ├── LLMManager.java
+│   ├── event/
+│   ├── exception/
+│   ├── option/
+│   ├── platform/
+│   ├── translator/                     # Baidu/Tencent/Youdao/Bing/LLM
+│   └── util/
+├── src/main/java/kgg/translator/
+│   ├── TranslatorMod.java
+│   ├── command/
+│   ├── handler/                        # Chat, Tip, Ocr, KeyBinding...
+│   ├── mixin/                          # hud, world, screen
+│   ├── modmenu/
+│   ├── option/
+│   ├── screen/
+│   ├── translator/                     # *Impl, *ModMenuImpl
+│   └── util/
+├── src/main/resources/
+│   ├── assets/translator/lang/
+│   ├── META-INF/
+│   ├── translator.mixins.json
+│   ├── language.json
+│   └── chat-format.json
+├── src/main/templates/META-INF/
+│   └── neoforge.mods.toml
+└── src/test/java/kgg/translator/
+
+# 不进 Git（见 .gitignore）
+├── build/
+├── .gradle/
+├── run/
+├── config/
+└── logs/

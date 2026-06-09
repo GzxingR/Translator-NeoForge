@@ -1,10 +1,9 @@
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot '_git-auth.ps1')
 $root = Split-Path $PSScriptRoot -Parent
 $repo = 'GzxingR/Translator-NeoForge'
 
-if (-not $env:GH_TOKEN) {
-    Write-Error 'Set GH_TOKEN to a GitHub PAT with repo (Contents + Administration) scope.'
-}
+Ensure-TranslatorGitAuth -RemoteUrl "https://github.com/$repo.git"
 
 $gh = 'C:\Program Files\GitHub CLI\gh.exe'
 if (-not (Test-Path $gh)) { $gh = 'gh' }
@@ -24,7 +23,6 @@ try {
             --source . --remote origin --push
     } else {
         git remote set-url origin "https://github.com/$repo.git"
-        & $gh auth setup-git
         git push -u origin main
         git push origin --tags
     }

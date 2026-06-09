@@ -46,6 +46,16 @@ c7.txt
 c8.txt
 HostHeaderTest.java
 
+### Personal files
+OH-Works/
+auto-push.ps1
+ai-handoff/新建 文本文档.txt
+ai-handoff/tools/git-sync.ps1
+ai-handoff/tools/push-branch.ps1
+scripts/_git-auth.ps1
+scripts/git-sync.ps1
+scripts/push-branch.ps1
+
 ### Secrets ###
 .env
 *.env

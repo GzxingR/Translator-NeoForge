@@ -8,19 +8,23 @@
 | `test.ps1` | `./gradlew test` |
 | `run-client.ps1` | `./gradlew runClient` |
 | `publish-modrinth.ps1` | 转发到 `scripts/publish-modrinth.ps1` |
-| `push-github.ps1` | 转发到 `scripts/push-github.ps1` |
+| `push-github.ps1` | 转发到 `scripts/push-github.ps1`（首次建仓库 / 推 main） |
+| `push-branch.ps1` | 推送**当前分支**（AI 自动化首选） |
+| `git-sync.ps1` | **add + commit + push** 一条龙（AI 自动化首选） |
 | `check-secrets.ps1` | 扫描即将提交的文件是否含密钥模式 |
 
 ## 环境变量
 
-复制 `env.example` 为本地环境变量（**不要** 提交 `.env`）：
+GitHub 凭证推荐放在 **本机**（不要提交、不要贴进聊天）：
 
-```powershell
-$env:MODRINTH_TOKEN = "..."
-$env:GH_TOKEN = "..."
-$env:TENCENT_SECRET_ID = "..."   # 仅本地联调测试
-$env:TENCENT_SECRET_KEY = "..."
-```
+1. 复制 `%USERPROFILE%\.hanako\secrets\github.token.example` → `github.token`
+2. 写入一行 GitHub PAT（`repo` 权限）
+3. 运行一次：`powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.hanako\setup-git-auth.ps1"`
+4. **重启 HanaAgent**
+
+之后 AI 只需调用 `git-sync.ps1` / `push-branch.ps1`，无需你手动 git。
+
+Modrinth 等其它密钥仍用环境变量（见 `env.example`）。
 
 ## DeepSeek / 其他 AI API
 

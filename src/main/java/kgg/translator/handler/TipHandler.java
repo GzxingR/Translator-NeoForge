@@ -17,13 +17,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class TipHandler {
     private static final Logger LOGGER = LogManager.getLogger(TipHandler.class);
-    private static boolean drawTranslateText = false;
-    private static boolean needTranslate = false;
-    private static boolean handleAfter = false;
-    private static FormattedCharSequence[] translatedOrderedText;
+    private static volatile boolean drawTranslateText = false;
+    private static volatile boolean needTranslate = false;
+    private static volatile boolean handleAfter = false;
+    private static volatile FormattedCharSequence[] translatedOrderedText;
     private static List<Component> lastText;
     private static long time = 0;
-    private static boolean isTranslated = false;
+    private static volatile boolean isTranslated = false;
 
     public static boolean isDrawTranslateText() { return drawTranslateText; }
     public static boolean isNeedTranslate() { return needTranslate; }
@@ -86,8 +86,9 @@ public class TipHandler {
             if (translatedLines.length == 1 && texts.size() != 1) {
                 translatedOrderedText = Minecraft.getInstance().font.split(Component.literal(translated), 120).toArray(FormattedCharSequence[]::new);
             } else {
-                translatedOrderedText = new FormattedCharSequence[translatedLines.length];
-                for (int i = 0; i < translatedLines.length; i++) {
+                int lineCount = Math.min(translatedLines.length, texts.size());
+                translatedOrderedText = new FormattedCharSequence[lineCount];
+                for (int i = 0; i < lineCount; i++) {
                     translatedOrderedText[i] = TextUtil.toText(translatedLines[i], texts.get(i)).getVisualOrderText();
                 }
             }

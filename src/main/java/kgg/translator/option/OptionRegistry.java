@@ -3,11 +3,9 @@ package kgg.translator.option;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.network.chat.Component;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,11 +16,23 @@ public class OptionRegistry implements OptionStorage {
 
     private OptionRegistry() {}
 
+    @SuppressWarnings("unchecked")
     public static <T> void readJsonElement(OptionInstance<T> option, JsonElement element) {
-        Type type = new TypeToken<T>(){}.getType();
-        Object value = gson.fromJson(element, type);
-        if (option.get() instanceof Integer && value instanceof Double) {
-            value = ((Double) value).intValue();
+        // Gson 2.11+ 禁止 TypeToken<T> 中使⽤类型变量，改为运⾏时判断类型
+        T current = option.get();
+        Object value;
+        if (element.getAsJsonPrimitive().isBoolean()) {
+            value = element.getAsBoolean();
+        } else if (element.getAsJsonPrimitive().isNumber()) {
+            if (current instanceof Integer) {
+                value = element.getAsInt();
+            } else if (current instanceof Double) {
+                value = element.getAsDouble();
+            } else {
+                value = element.getAsNumber();
+            }
+        } else {
+            value = element.getAsString();
         }
         option.set((T) value);
     }

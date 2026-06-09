@@ -4,12 +4,12 @@
   "package": "kgg.translator.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "DrawContextMixinTooltip",
     "ScreenMixinForChat",
     "world.SignTextMixin",
     "world.EntityRendererMixin"
   ],
   "client": [
+    "DrawContextMixinTooltip",
     "hud.BossBarHudMixin",
     "hud.ChatComponentAccessor",
     "hud.ChatHudMixin",

@@ -23,11 +23,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ChatHandler {
     private static final List<MutableComponent> translatingTexts = new CopyOnWriteArrayList<>();
+    private static final String CLICK_PREFIX = "kgg:";
+    // 存储被点击的可翻译文本组件引用
+    static final Map<String, ClickData> CLICK_MAP = new ConcurrentHashMap<>();
+
+    public record ClickData(MutableComponent text, boolean clicked) {}
 
     private static void refresh() {
         Minecraft.getInstance().gui.getChat().refreshTrimmedMessages();
@@ -52,10 +60,12 @@ public class ChatHandler {
             if (text == null) {
                 continue;
             }
-            TranslateClickEvent event = getTranslateClickEvent(text);
-            if (event != null && !event.clicked) {
-                text.getSiblings().removeLast();
-                text.getSiblings().removeLast();
+            if (hasTranslateClick(text) && !isClicked(text)) {
+                int size = text.getSiblings().size();
+                if (size >= 2) {
+                    text.getSiblings().removeLast();
+                    text.getSiblings().removeLast();
+                }
             }
         }
         refresh();
@@ -87,7 +97,8 @@ public class ChatHandler {
     }
 
     private static final Component TRANSLATING_TIP = Component.literal("[翻译中]")
-            .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(2259711)).withClickEvent(new TranslateClickEvent(null)));
+            .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(2259711)).withClickEvent(
+                    new ClickEvent.RunCommand(CLICK_PREFIX + "none")));
 
     public static void translate(MutableComponent text) {
         if (text == null) {
@@ -105,14 +116,16 @@ public class ChatHandler {
                 return createErrorText(TranslateExceptionUtil.getDisplayMessage(e), text, s);
             }
         }).thenAccept(result -> {
-            translatingTexts.remove(text);
-            TranslateClickEvent event = getTranslateClickEvent(text);
-            if (event != null) {
-                text.getSiblings().set(text.getSiblings().size() - 1, result);
-            } else {
-                text.append(" ").append(result);
-            }
-            Minecraft.getInstance().execute(ChatHandler::refresh);
+            Minecraft.getInstance().execute(() -> {
+                translatingTexts.remove(text);
+                String clickId = findClickId(text);
+                if (clickId != null) {
+                    text.getSiblings().set(text.getSiblings().size() - 1, result);
+                } else {
+                    text.append(" ").append(result);
+                }
+                ChatHandler.refresh();
+            });
         });
     }
 
@@ -132,11 +145,13 @@ public class ChatHandler {
         }
         if (translatingTexts.contains(text)) {
             text.append(" ").append(TRANSLATING_TIP);
-        } else if (getTranslateClickEvent(text) == null) {
+        } else if (!hasTranslateClick(text)) {
+            String clickId = UUID.randomUUID().toString();
+            CLICK_MAP.put(clickId, new ClickData(text, false));
             text.append(" ").append(Component.literal("[翻译]").withStyle(Style.EMPTY
                     .withColor(TextColor.fromRgb(65522))
-                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("点击翻译")))
-                    .withClickEvent(new TranslateClickEvent(text))
+                    .withHoverEvent(new HoverEvent.ShowText(Component.literal("点击翻译")))
+                    .withClickEvent(new ClickEvent.RunCommand(CLICK_PREFIX + clickId))
                     .withInsertion(text.getString())));
         }
     }
@@ -149,16 +164,16 @@ public class ChatHandler {
         return false;
     }
 
-    private static final HoverEvent TRANSLATE_HOVER_EVENT = new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("点击重新翻译"));
-
     private static Component createErrorText(String err, MutableComponent originalText, String original) {
         if (originalText == null) {
             return Component.empty();
         }
+        String clickId = UUID.randomUUID().toString();
+        CLICK_MAP.put(clickId, new ClickData(originalText, true));
         return Component.literal("[" + err + "]").withStyle(Style.EMPTY
                 .withColor(TextColor.fromRgb(13378339))
-                .withHoverEvent(TRANSLATE_HOVER_EVENT)
-                .withClickEvent(new TranslateClickEvent(originalText, true))
+                .withHoverEvent(new HoverEvent.ShowText(Component.literal("点击重新翻译")))
+                .withClickEvent(new ClickEvent.RunCommand(CLICK_PREFIX + clickId))
                 .withInsertion(original));
     }
 
@@ -166,10 +181,12 @@ public class ChatHandler {
         if (originalText == null) {
             return Component.empty();
         }
+        String clickId = UUID.randomUUID().toString();
+        CLICK_MAP.put(clickId, new ClickData(originalText, true));
         return Component.literal(result).withStyle(Style.EMPTY
                 .withColor(TextColor.fromRgb(3145516))
-                .withHoverEvent(TRANSLATE_HOVER_EVENT)
-                .withClickEvent(new TranslateClickEvent(originalText, true))
+                .withHoverEvent(new HoverEvent.ShowText(Component.literal("点击重新翻译")))
+                .withClickEvent(new ClickEvent.RunCommand(CLICK_PREFIX + clickId))
                 .withInsertion(result));
     }
 
@@ -179,29 +196,51 @@ public class ChatHandler {
     }
 
     @Nullable
-    private static TranslateClickEvent getTranslateClickEvent(MutableComponent text) {
-        if (text == null || text.getSiblings().size() < 2) {
-            return null;
-        }
-        Component lastSibling = text.getSiblings().getLast();
-        if (lastSibling.getStyle().getClickEvent() instanceof TranslateClickEvent event) {
-            return event;
+    private static String getClickCommand(ClickEvent event) {
+        // MC 1.21.5: ClickEvent è¯å°æ¥å£ï¼éè¿æ¨¡å¼å¹éè·åå½ä»¤
+        if (event instanceof ClickEvent.RunCommand cmd) {
+            return cmd.command();
         }
         return null;
     }
 
-    public static class TranslateClickEvent extends ClickEvent {
-        public MutableComponent text;
-        public boolean clicked;
-
-        public TranslateClickEvent(MutableComponent text, boolean clicked) {
-            super(Action.RUN_COMMAND, "");
-            this.text = text;
-            this.clicked = clicked;
+    private static String findClickId(MutableComponent text) {
+        if (text == null || text.getSiblings().size() < 2) {
+            return null;
         }
-
-        public TranslateClickEvent(MutableComponent text) {
-            this(text, false);
+        ClickEvent event = text.getSiblings().getLast().getStyle().getClickEvent();
+        if (event != null) {
+            String cmd = getClickCommand(event);
+            if (cmd != null && cmd.startsWith(CLICK_PREFIX) && !cmd.equals(CLICK_PREFIX + "none")) {
+                return cmd.substring(CLICK_PREFIX.length());
+            }
         }
+        return null;
+    }
+
+    private static boolean hasTranslateClick(MutableComponent text) {
+        return findClickId(text) != null;
+    }
+
+    private static boolean isClicked(MutableComponent text) {
+        String id = findClickId(text);
+        if (id != null) {
+            ClickData data = CLICK_MAP.get(id);
+            return data != null && data.clicked();
+        }
+        return false;
+    }
+
+    // 由 ScreenMixinForChat 调用
+    public static boolean handleClickCommand(String command) {
+        if (command != null && command.startsWith(CLICK_PREFIX)) {
+            String id = command.substring(CLICK_PREFIX.length());
+            ClickData data = CLICK_MAP.get(id);
+            if (data != null && data.text() != null) {
+                ChatHandler.translateWithTip(data.text());
+                return true;
+            }
+        }
+        return false;
     }
 }

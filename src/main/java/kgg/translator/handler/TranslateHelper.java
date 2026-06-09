@@ -7,15 +7,24 @@ import net.minecraft.network.chat.Component;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class TranslateHelper {
-    private static final LinkedHashMap<String, TranslationStatus> stateMap = new LinkedHashMap<>(16, 0.75f, true) {
-        @Override
-        protected boolean removeEldestEntry(Map.Entry<String, TranslationStatus> eldest) {
-            return size() > 1000;
+    private static final ConcurrentHashMap<String, TranslationStatus> stateMap = new ConcurrentHashMap<>(16);
+    // LRU 驱逐使用独立追踪
+    private static final java.util.concurrent.LinkedBlockingDeque<String> accessOrder = new java.util.concurrent.LinkedBlockingDeque<>(1000);
+
+    private static void recordAccess(String key) {
+        accessOrder.remove(key);
+        if (accessOrder.size() >= 1000) {
+            String oldest = accessOrder.pollFirst();
+            if (oldest != null) {
+                stateMap.remove(oldest);
+            }
         }
-    };
+        accessOrder.addLast(key);
+    }
     private static final int MAX_FAILED_TEXT_CACHE_TIME = 1000 * 60 * 2;
 
     public static Component translateNoWait(Component text, String source) {
@@ -38,6 +47,7 @@ public class TranslateHelper {
                             comparable.accept(text);
                             synchronized (status) {
                                 status.state = State.SUCCESS;
+                                recordAccess(text);
                             }
                         } catch (Exception e) {
                             synchronized (status) {
@@ -52,6 +62,7 @@ public class TranslateHelper {
                     return text;
                 }
                 case SUCCESS -> {
+                    recordAccess(text);
                     try {
                         return TranslateService.cachedTranslate(text, source);
                     } catch (Exception e) {
@@ -60,7 +71,9 @@ public class TranslateHelper {
                 }
                 case FAILED -> {
                     if (System.currentTimeMillis() - status.failedTime > MAX_FAILED_TEXT_CACHE_TIME) {
-                        status.state = State.PENDING;
+                        synchronized (status) {
+                            status.state = State.PENDING;
+                        }
                     }
                     return text;
                 }

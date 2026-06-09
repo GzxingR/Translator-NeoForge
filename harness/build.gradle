@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = rootProject.group
+version = rootProject.version
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.neoforged.net/releases/' }
+    maven { url = 'https://libraries.minecraft.net/' }
+    maven { url = 'https://maven.shedaniel.me/' }
+    maven { url = 'https://maven.terraformersmc.com/' }
+}
+
+dependencies {
+    // 依赖主项目（包含 common 和 NeoForge 实现的全部编译产物）
+    implementation project(':')
+
+    // 运行时额外依赖
+    implementation "com.google.code.gson:gson:2.10.1"
+    implementation "org.apache.commons:commons-lang3:3.14.0"
+    implementation "org.apache.logging.log4j:log4j-api:2.22.1"
+    implementation "org.apache.logging.log4j:log4j-core:2.22.1"
+    implementation "com.google.guava:guava:33.0.0-jre"
+    implementation "commons-io:commons-io:2.15.0"
+    implementation "com.mojang:authlib:6.0.53"  // RequestUtil / BingTranslator 需要
+}
+
+application {
+    mainClass = 'kgg.translator.harness.HarnessMain'
+}
+
+tasks.named('run', JavaExec).configure {
+    standardInput = System.in
+    workingDir = project.projectDir
+}
+
+tasks.named('startScripts').configure {
+    defaultJvmOpts = ['-Dlog4j.configurationFile=log4j2.xml']
+}

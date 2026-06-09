@@ -36,10 +36,11 @@ public class BingTranslator extends Translator {
     private long updateTime;
 
     private static boolean updated = false;
+    private int minDelayMs = 500; // Bing 最低请求间隔
 
     @Override
     public synchronized String translate(String Component, String from, String to) throws IOException {
-        return delay(0, ()->{
+        return delay(minDelayMs, ()->{
             if (isOverAge()) update();
             boolean ignore = true;
             for (char c : Component.toCharArray()) {
@@ -80,9 +81,12 @@ public class BingTranslator extends Translator {
     }
 
     private void checkSuccess(JsonElement result) throws ErrorCodeException {
-        JsonElement code;
-        if (result.isJsonObject() && (code=result.getAsJsonObject().get("statusCode")).isJsonNull()){
-            throw new ErrorCodeException("bing", code.getAsString());
+        if (result.isJsonObject()) {
+            JsonElement code = result.getAsJsonObject().get("statusCode");
+            // statusCode 存在且不为 JsonNull 时表示有错误
+            if (code != null && !code.isJsonNull()) {
+                throw new ErrorCodeException("bing", code.getAsString());
+            }
         }
     }
 

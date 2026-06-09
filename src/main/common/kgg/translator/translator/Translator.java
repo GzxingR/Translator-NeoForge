@@ -5,8 +5,6 @@ import kgg.translator.TranslatorConfig;
 import kgg.translator.TranslatorManager;
 import kgg.translator.exception.TranslateException;
 import kgg.translator.ocrtrans.ResRegion;
-import org.apache.commons.lang3.NotImplementedException;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -20,7 +18,7 @@ public abstract class Translator {
     }
 
     protected String translate(String Component, String from, String to) throws IOException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException(getName() + " does not support direct translation without source");
     };
 
     public ResRegion[] ocrtrans(byte[] img, String from, String to) throws IOException {

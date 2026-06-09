@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.lang.reflect.Field;
 
 public class ModMenuApiImpl {
     private static boolean needsRefresh = false;
@@ -228,10 +227,7 @@ public class ModMenuApiImpl {
      */
     private static void savePrompt(String prompt) {
         try {
-            // 通过反射设置 prompt 字段
-            Field promptField = LLMManager.class.getDeclaredField("prompt");
-            promptField.setAccessible(true);
-            promptField.set(null, prompt);
+            LLMManager.setPrompt(prompt);
             
             // 保存到 prompt.txt 文件
             Path configPath = PlatformHooks.getTranslatorConfigDir().resolve("prompt.txt");

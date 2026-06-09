@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.stb.STBImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,28 +24,31 @@ public class OcrHandler {
         Minecraft client = Minecraft.getInstance();
         OcrScreen screen = new OcrScreen(client.screen);
         client.setScreen(screen);
-        try (NativeImage nativeImage = Screenshot.takeScreenshot(client.getMainRenderTarget())) {
-            byte[] bytes = getBytes(nativeImage);
-            CompletableFuture.runAsync(() -> {
-                try {
-                    ResRegion[] ocrtrans = TranslateService.ocrtrans(bytes);
-                    ocrtrans = Arrays.stream(ocrtrans).map(resRegion ->
-                            resRegion.scale(1f / client.getWindow().getGuiScale())).toArray(ResRegion[]::new);
-                    screen.setResRegions(ocrtrans);
-                } catch (Exception e) {
-                    screen.setError(TranslateExceptionUtil.getDisplayMessage(e));
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        // MC 1.21.5: Screenshot.takeScreenshot(RenderTarget, Consumer<NativeImage>)
+        Screenshot.takeScreenshot(client.getMainRenderTarget(), nativeImage -> {
+            try {
+                byte[] bytes = getBytes(nativeImage);
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        ResRegion[] ocrtrans = TranslateService.ocrtrans(bytes);
+                        ocrtrans = Arrays.stream(ocrtrans).map(resRegion ->
+                                resRegion.scale(1f / client.getWindow().getGuiScale())).toArray(ResRegion[]::new);
+                        screen.setResRegions(ocrtrans);
+                    } catch (Exception e) {
+                        screen.setError(TranslateExceptionUtil.getDisplayMessage(e));
+                    }
+                });
+            } catch (IOException e) {
+                LOGGER.error("Failed to process screenshot", e);
+            }
+        });
     }
 
     public static byte[] getBytes(NativeImage nativeImage) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         WritableByteChannel writableByteChannel = Channels.newChannel(byteArrayOutputStream);
         if (!nativeImage.writeToChannel(writableByteChannel)) {
-            throw new IOException("Could not write image to byte array: " + STBImage.stbi_failure_reason());
+            throw new IOException("Could not write image to byte array");
         }
         writableByteChannel.close();
         byteArrayOutputStream.close();

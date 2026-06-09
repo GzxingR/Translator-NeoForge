@@ -7,7 +7,11 @@ import kgg.translator.handler.KeyBindingHandler;
 import kgg.translator.option.OptionRegistry;
 import kgg.translator.option.Options;
 import kgg.translator.platform.PlatformHooks;
-import kgg.translator.translator.*;
+import kgg.translator.translator.BaiduTranslatorModMenuImpl;
+import kgg.translator.translator.LLMTranslatorImpl;
+import kgg.translator.translator.TencentTranslatorModMenuImpl;
+import kgg.translator.translator.YouDaoTranslatorModMenuImpl;
+import kgg.translator.translator.BingTranslator;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -38,6 +42,7 @@ public class TranslatorMod {
         TranslatorManager.addTranslator(new BaiduTranslatorModMenuImpl());
         TranslatorManager.addTranslator(new YouDaoTranslatorModMenuImpl());
         TranslatorManager.addTranslator(new TencentTranslatorModMenuImpl());
+        TranslatorManager.addTranslator(new BingTranslator());
 
         Runtime.getRuntime().addShutdownHook(new Thread(TranslatorConfig::writeFile));
     }

@@ -41,6 +41,7 @@ public class OcrScreen extends Screen {
     @Override
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
+        if (font == null) return;
         context.drawString(font, esc, width - font.width(esc), height - font.lineHeight, 0xFFFFFF, true);
         if (error != null) {
             context.drawCenteredString(font, error, width / 2, height / 2, 0xFF0000);
@@ -103,4 +104,6 @@ public class OcrScreen extends Screen {
             super.renderBackground(context, mouseX, mouseY, delta);
         }
     }
+
+
 }

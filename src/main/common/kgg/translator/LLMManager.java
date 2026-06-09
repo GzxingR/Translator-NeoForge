@@ -41,6 +41,10 @@ public class LLMManager {
         return prompt;
     }
 
+    public static void setPrompt(String newPrompt) {
+        prompt = newPrompt;
+    }
+
     public static Map<String, Model> getModels() {
         return models;
     }
@@ -77,6 +81,9 @@ public class LLMManager {
     }
 
     private static void addLLMTranslator(Model model) {
+        if (model.name == null || model.name.isBlank()) {
+            throw new IllegalArgumentException("Model name must not be blank");
+        }
         TranslatorManager.addTranslator(translatorFactory.create(model));
     }
 

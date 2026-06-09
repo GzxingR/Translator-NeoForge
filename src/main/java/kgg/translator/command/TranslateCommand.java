@@ -16,6 +16,7 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
+
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 
 import java.util.concurrent.CompletableFuture;
@@ -43,8 +44,8 @@ public class TranslateCommand {
             try {
                 String result = TranslateService.translate(text, TranslatorManager.getCurrent(), from, to, Source.CHAT);
                 message = Component.literal("[结果] " + result).withStyle(Style.EMPTY
-                        .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, result))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("点击复制"))));
+                        .withClickEvent(new ClickEvent.CopyToClipboard(result))
+                        .withHoverEvent(new HoverEvent.ShowText(Component.literal("点击复制"))));
             } catch (TranslateException e) {
                 message = Component.translatable("commands.translate.error", TranslateExceptionUtil.getDisplayMessage(e))
                         .withStyle(ChatFormatting.RED);

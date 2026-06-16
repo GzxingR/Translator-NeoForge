@@ -118,6 +118,17 @@ tasks.named('jar', Jar).configure {
     archiveFileName = "${archives_base_name}-${minecraft_version}-${version}.jar"
 }
 
+tasks.register('debugJar', Jar) {
+    archiveFileName = "${archives_base_name}-${minecraft_version}-${version}-debug.jar"
+    from sourceSets.main.output
+    manifest {
+        attributes(
+            'Implementation-Title': 'Translator Mod (Debug)',
+            'Implementation-Version': version
+        )
+    }
+}
+
 modrinth {
     token = System.getenv('MODRINTH_TOKEN')
     projectId = modrinth_project_id

@@ -11,4 +11,6 @@ public class Source {
     public static final String TOOLTIP = "tooltip";
     public static final String UNKNOWN = "unknown";
     public static final String BOOK = "book";
+    public static final String CONTAINER = "container";
+    public static final String ITEM_NAME = "item_name";
 }

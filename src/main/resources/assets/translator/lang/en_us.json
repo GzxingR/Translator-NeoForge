@@ -45,6 +45,10 @@
     "translator.option.sign_combine": "Combine Sign Translation",
     "translator.option.multi-translation": "Multi Translation",
     "translator.option.multi-translation.desc": "Allow translating the same text multiple times (experimental).",
+    "translator.option.auto_container": "Translate Container Titles",
+    "translator.option.auto_container.desc": "When enabled, container titles (chest, inventory, crafting table, etc.) will be translated",
+    "translator.option.auto_item_name": "Translate Selected Item Name",
+    "translator.option.auto_item_name.desc": "When enabled, the name of the selected item above the hotbar will be translated",
     "translator.option.auto_tooltip.desc": "When enabled, item info will be translated after hovering over an item for over 0.4 seconds",
     "translator.option.sign_combine.desc": "If enabled, it will combine other lines of the sign for translation, making the result more accurate but potentially losing some ending content. If disabled, each line will be translated separately, and if the translation is longer than the original, it may exceed the sign width",
 

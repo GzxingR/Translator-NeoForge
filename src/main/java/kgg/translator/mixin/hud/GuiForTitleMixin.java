@@ -20,7 +20,7 @@ public abstract class GuiForTitleMixin {
         return TranslateHelper.translateNoWait(component, Source.TITLE);
     }
 
-    @ModifyArg(method = "renderTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawStringWithBackdrop(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;IIIII)I"), index = 1)
+    @ModifyArg(method = "renderTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawStringWithBackdrop(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;IIII)I"), index = 1)
     public Component translateTitleDraw(Component text) {
         if (!Options.autoTitle.get()) {
             return text;
@@ -36,7 +36,7 @@ public abstract class GuiForTitleMixin {
         return TranslateHelper.translateNoWait(component, Source.TITLE);
     }
 
-    @ModifyArg(method = "renderOverlayMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawStringWithBackdrop(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;IIIII)I"), index = 1)
+    @ModifyArg(method = "renderOverlayMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawStringWithBackdrop(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;IIII)I"), index = 1)
     public Component translateOverlayDraw(Component text) {
         if (!Options.autoTitle.get()) {
             return text;

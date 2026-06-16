@@ -1,5 +1,6 @@
 package kgg.translator.handler;
 
+import kgg.translator.TranslatorManager;
 import kgg.translator.TranslateService;
 import kgg.translator.ocrtrans.ResRegion;
 import kgg.translator.screen.OcrScreen;
@@ -24,7 +25,11 @@ public class OcrHandler {
         Minecraft client = Minecraft.getInstance();
         OcrScreen screen = new OcrScreen(client.screen);
         client.setScreen(screen);
-        // MC 1.21.5: Screenshot.takeScreenshot(RenderTarget, Consumer<NativeImage>)
+
+        LOGGER.info("OCR started, current translator: {} (configured: {})",
+            TranslatorManager.getCurrent() != null ? TranslatorManager.getCurrent().getName() : "none",
+            TranslatorManager.getCurrent() != null ? TranslatorManager.getCurrent().isConfigured() : false);
+
         Screenshot.takeScreenshot(client.getMainRenderTarget(), nativeImage -> {
             try {
                 byte[] bytes = getBytes(nativeImage);
@@ -35,7 +40,13 @@ public class OcrHandler {
                                 resRegion.scale(1f / client.getWindow().getGuiScale())).toArray(ResRegion[]::new);
                         screen.setResRegions(ocrtrans);
                     } catch (Exception e) {
-                        screen.setError(TranslateExceptionUtil.getDisplayMessage(e));
+                        LOGGER.error("OCR translation failed", e);
+                        String msg = TranslateExceptionUtil.getDisplayMessage(e);
+                        if (msg.contains("不支持图片翻译")) {
+                            String current = TranslatorManager.getCurrent() != null ? TranslatorManager.getCurrent().getName() : "unknown";
+                            msg = current + " 不支持图片翻译。\n请使用百度翻译（支持OCR图片翻译）并配置正确的API密钥。";
+                        }
+                        screen.setError(msg);
                     }
                 });
             } catch (IOException e) {

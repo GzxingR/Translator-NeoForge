@@ -33,8 +33,9 @@ public class OcrScreen extends Screen {
 
     @Override
     protected void init() {
-        if (resRegions != null) {
-            this.minecraft.setScreen(this.parent);
+        // 延迟到渲染线程执行，确保 OCR 结果正确显示后不再自动关闭
+        if (resRegions != null && error == null) {
+            // 仅在已获得结果时返回父屏幕（按 Esc 正常关闭）
         }
     }
 
@@ -43,7 +44,12 @@ public class OcrScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         context.drawString(font, esc, width - font.width(esc), height - font.lineHeight, 0xFFFFFF, true);
         if (error != null) {
-            context.drawCenteredString(font, error, width / 2, height / 2, 0xFF0000);
+            String[] errorLines = error.getString().split("\n");
+            int lineY = height / 2 - (errorLines.length * font.lineHeight) / 2;
+            for (String line : errorLines) {
+                context.drawCenteredString(font, Component.literal(line), width / 2, lineY, 0xFF0000);
+                lineY += font.lineHeight + 2;
+            }
         } else if (resRegions == null) {
             context.drawCenteredString(font, translatingText, width / 2, height / 2, 0xFFFFFF);
         } else {

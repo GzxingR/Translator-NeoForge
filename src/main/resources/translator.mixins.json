@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DrawContextMixinTooltip",
+    "DrawContextMixinTooltipTranslation",
     "ScreenMixinForChat",
     "world.SignTextMixin",
     "world.EntityRendererMixin"
@@ -16,6 +17,7 @@
     "hud.ChatScreenMixin",
     "hud.GuiForScoreboardMixin",
     "hud.GuiForTitleMixin",
+    "hud.GuiForItemNameMixin",
     "screen.BookEditScreenMixin",
     "screen.BookViewScreenMixin",
     "screen.AbstractContainerScreenMixin",

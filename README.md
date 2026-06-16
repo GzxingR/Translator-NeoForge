@@ -60,7 +60,7 @@ See [docs/DEV.md](docs/DEV.md).
 ## Publish to Modrinth
 
 ```powershell
-$env:MODRINTH_TOKEN = "mrp_..."
+$env:MODRINTH_TOKEN = "your_modrinth_token_here"
 ./scripts/publish-modrinth.ps1
 ```
 

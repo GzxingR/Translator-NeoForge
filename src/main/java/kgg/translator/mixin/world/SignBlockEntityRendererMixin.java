@@ -15,8 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SignRenderer.class)
 public class SignBlockEntityRendererMixin {
-    @Inject(method = "renderText", at = @At("HEAD"))
-    public void renderText(BlockPos pos, SignText signText, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int lineHeight, int lineWidth, boolean front, CallbackInfo ci) {
+    // 1.21.1: renderSignText
+    @Inject(method = "renderSignText", at = @At("HEAD"), require = 0)
+    public void onRenderSignText(BlockPos pos, SignText signText, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int lineHeight, int lineWidth, boolean front, CallbackInfo ci) {
+        SignHelper.lineWidth = lineWidth;
+        SignHelper.translate = Options.inRange(Vec3.atCenterOf(pos));
+    }
+
+    // 1.21.5: renderText
+    @Inject(method = "renderText", at = @At("HEAD"), require = 0)
+    public void onRenderText(BlockPos pos, SignText signText, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int lineHeight, int lineWidth, boolean front, CallbackInfo ci) {
         SignHelper.lineWidth = lineWidth;
         SignHelper.translate = Options.inRange(Vec3.atCenterOf(pos));
     }

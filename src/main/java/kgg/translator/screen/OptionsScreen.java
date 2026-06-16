@@ -23,6 +23,7 @@ public class OptionsScreen extends OptionsSubScreen {
         this.list.addBig(Options.autoSign);
         this.list.addBig(Options.signCombine);
         this.list.addBig(Options.autoContainer);
+        this.list.addBig(Options.autoItemName);
         this.list.addBig(Options.autoEntityName);
         this.list.addBig(Options.distance);
         this.list.addBig(Options.autoPlayerName);

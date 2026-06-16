@@ -63,3 +63,4 @@ scripts/push-branch.ps1
 !config/translator/.gitkeep
 
 ### AI Handoff（版本受控）
+auto-push.ps1

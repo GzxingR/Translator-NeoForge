@@ -18,6 +18,7 @@
     "hud.GuiForTitleMixin",
     "screen.BookEditScreenMixin",
     "screen.BookViewScreenMixin",
+    "screen.AbstractContainerScreenMixin",
     "screen.ScreenFieldsAccessor",
     "screen.ScreenInvoker",
     "world.SignBlockEntityRendererMixin",

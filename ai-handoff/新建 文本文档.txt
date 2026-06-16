@@ -1,0 +1,26 @@
+位置
+Translator-1.21.1-neoforge/ai-handoff/
+里面有什么
+目录	内容
+prompts/
+系统提示词、DeepSeek V4 Pro 专用说明、Cursor 说明、任务模板
+project/
+工程总览、架构图、模块索引、目录树、链接
+rules/
+开发约束（禁提交密钥等）、编码约定
+tools/
+构建/测试/运行/发布脚本、环境变量示例、密钥扫描
+给其他 AI 怎么用（3 步）
+打开 ai-handoff/prompts/SYSTEM.md → 整段粘贴为 System Prompt
+用 DeepSeek 时再加 ai-handoff/prompts/deepseek-v4.md 里的补充指令
+具体任务从 ai-handoff/prompts/task-templates.md 复制对应模板
+常用脚本
+
+cd "c:\Users\Administrator\Downloads\Translator-1.21.1-neoforge"
+./ai-handoff/tools/test.ps1      # 跑测试
+./ai-handoff/tools/build.ps1     # 测试 + 打包
+./ai-handoff/tools/check-secrets.ps1  # 提交前扫密钥
+入口文档：ai-handoff/README.md
+主 README 和 docs/MAINTAIN.md 已加上指向该文件夹的链接。
+
+如需同步到 GitHub，说一声我可以帮你 commit 并 push。

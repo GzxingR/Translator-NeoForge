@@ -39,4 +39,5 @@ public class Options {
     public static final OptionInstance<Boolean> autoSign = registerBool("auto_sign", false);
     public static final OptionInstance<Boolean> signCombine = registerBoolWithTooltip("sign_combine", true);
     public static OptionInstance<Boolean> multiTranslation = registerBoolWithTooltip("multi-translation", false);
+    public static final OptionInstance<Boolean> autoContainer = registerBoolWithTooltip("auto_container", false);
 }
